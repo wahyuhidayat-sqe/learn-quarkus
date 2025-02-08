@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id 'checkstyle'
+}
+
+checkstyle {
+    toolVersion = '10.16.0'
+    configFile = file('checkstyle.xml')
+    ignoreFailures = false
+    showViolations = true
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation("io.quarkus:quarkus-rest-jackson")
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-rest'
+    implementation 'io.quarkus:quarkus-elytron-security-jdbc'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+
+    // Hibernate ORM
+    implementation("io.quarkus:quarkus-hibernate-orm-panache")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
+
+    // validator
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
+    implementation("io.quarkus:quarkus-hibernate-validator")
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    // AWS SDK
+    implementation(platform("software.amazon.awssdk:bom:2.27.21"))
+    implementation("software.amazon.awssdk:s3")
+}
+
+group 'org.learn_quarkus'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required = false
+        html.required = true
+        html.outputLocation = file("reports/checkstyle.html")
+    }
+}

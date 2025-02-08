@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <module name="TreeWalker">
+        <module name="AvoidStarImport">
+            <property name="excludes" value="jakarta.ws.rs.*"/>
+            <property name="excludes" value="jakarta.persistence.*"/>
+        </module>
+        <module name="UnusedImports"/>
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+        </module>
+    </module>
+</module>
