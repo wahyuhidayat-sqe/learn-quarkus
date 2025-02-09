@@ -1,11 +1,13 @@
 package org.learn.quarkus.rest.user.schema;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+@RegisterForReflection
 public class CreateUserRequest {
 
     @Size(min = 3, max = 20)

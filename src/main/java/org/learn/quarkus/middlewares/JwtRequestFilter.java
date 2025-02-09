@@ -8,6 +8,7 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
+import lombok.extern.slf4j.Slf4j;
 import org.learn.quarkus.models.User;
 import org.learn.quarkus.schema.ErrorResponse;
 import org.learn.quarkus.services.AuthService;
@@ -49,6 +50,7 @@ import java.util.HashMap;
  */
 @Provider
 @Priority(1000) // High priority to execute before request processing
+@Slf4j
 public class JwtRequestFilter implements ContainerRequestFilter {
 
 

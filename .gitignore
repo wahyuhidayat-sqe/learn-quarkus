@@ -3,3 +3,4 @@ build/
 volumes/
 reports/
 .gradle/
+.env

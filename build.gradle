@@ -17,6 +17,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.quarkus:quarkus-smallrye-jwt'
     implementation("io.quarkus:quarkus-rest-jackson")
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-arc'
@@ -39,11 +40,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
     testCompileOnly 'org.projectlombok:lombok:1.18.36'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
-
-    // JWT
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
     // AWS SDK
     implementation(platform("io.quarkus.platform:quarkus-bom:3.18.2"))

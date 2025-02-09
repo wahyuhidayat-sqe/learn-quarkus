@@ -1,8 +1,8 @@
 package org.learn.quarkus.services;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.smallrye.jwt.auth.principal.JWTParser;
+import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.security.auth.message.AuthException;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.learn.quarkus.repositories.storage.StorageRepository;
 import org.learn.quarkus.rest.auth.schema.LoginData;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 @Slf4j
@@ -23,14 +22,18 @@ public class AuthService {
     private final String jwtSecret;
     private final UserRepository userRepository;
     private final StorageRepository storageRepository;
+    private final JWTParser jwtParser;
 
     public AuthService(
             @ConfigProperty(name = "app.jwt.secret") String jwtSecret,
             UserRepository userRepository,
-            StorageRepository storageRepository) {
+            StorageRepository storageRepository,
+            JWTParser jwtParser
+    ) {
         this.jwtSecret = jwtSecret;
         this.userRepository = userRepository;
         this.storageRepository = storageRepository;
+        this.jwtParser = jwtParser;
     }
 
     public LoginData login(String email, String password) throws AuthException {
@@ -40,13 +43,11 @@ public class AuthService {
         }
 
         var expiresAt = Instant.now().plusSeconds(60 * 60 * 24);
-        var key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        var token = Jwts.builder()
-                .signWith(key)
+        var token = Jwt
+                .upn(user.email)
                 .subject(user.id.toString())
-                .expiration(Date.from(expiresAt))
-                .compact();
-
+                .expiresAt(expiresAt)
+                .signWithSecret(jwtSecret);
         if (user.photo != null) {
             var photoUrl = storageRepository.getDownloadUrl(user.photo);
             user.setPhoto(photoUrl);
@@ -62,18 +63,9 @@ public class AuthService {
         if (token == null || token.trim().isEmpty()) {
             throw new AuthException("invalid token");
         }
-        var key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        var parser = Jwts.parser()
-                .verifyWith(key)
-                .build();
-        var cleanToken = token.replace("Bearer ", "");
         try {
-            var claims = parser.parseSignedClaims(cleanToken);
-            var subject = claims.getPayload().getSubject();
-            if (subject == null || subject.trim().isEmpty()) {
-                throw new AuthException("invalid token");
-            }
-            var user = userRepository.findById(UUID.fromString(subject));
+            var claims = jwtParser.verify(token, jwtSecret);
+            var user = userRepository.findById(UUID.fromString(claims.getSubject()));
             if (user == null) {
                 throw new AuthException("invalid token");
             }
