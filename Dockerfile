@@ -16,11 +16,7 @@ RUN ./gradlew dependencies --no-daemon
 
 COPY . .
 
-# Build native executable using Gradle
-#RUN ./gradlew build \
-#    -Dquarkus.native.enabled=true \
-#    --no-daemon
-
+# build app native static binary
 RUN ./gradlew build --no-daemon \
     -Dquarkus.native.enabled=true \
     -Dquarkus.native.additional-build-args="-H:+DumpTargetInfo,-H:+TraceNativeToolUsage,-H:+SpawnIsolates,-H:+JNI,--native-image-info,--verbose,-H:+StaticExecutableWithDynamicLibC,-H:DeadlockWatchdogInterval=10,-H:+DeadlockWatchdogExitOnTimeout"
