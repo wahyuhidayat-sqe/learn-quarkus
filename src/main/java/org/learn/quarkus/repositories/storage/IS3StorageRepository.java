@@ -29,8 +29,8 @@ public class IS3StorageRepository implements StorageRepository {
 
     @Inject
     public IS3StorageRepository(
-            @ConfigProperty(name = "storage.s3.bucket-name") String bucketName,
-            @ConfigProperty(name = "storage.s3.region") String region
+            @ConfigProperty(name = "app.storage.bucket-name") String bucketName,
+            @ConfigProperty(name = "app.storage.region") String region
     ) {
         this.bucketName = bucketName;
         this.client = S3Client.builder()
