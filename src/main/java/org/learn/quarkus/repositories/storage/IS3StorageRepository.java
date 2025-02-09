@@ -1,12 +1,10 @@
 package org.learn.quarkus.repositories.storage;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -18,7 +16,7 @@ import java.time.Duration;
 import java.util.UUID;
 
 @Slf4j
-@ApplicationScoped
+@Singleton
 public class IS3StorageRepository implements StorageRepository {
 
     private static final String UPLOAD_PATH_PREFIX = "uploads/";
@@ -30,17 +28,12 @@ public class IS3StorageRepository implements StorageRepository {
     @Inject
     public IS3StorageRepository(
             @ConfigProperty(name = "app.storage.bucket-name") String bucketName,
-            @ConfigProperty(name = "app.storage.region") String region
+            S3Client s3Client,
+            S3Presigner s3Presigner
     ) {
         this.bucketName = bucketName;
-        this.client = S3Client.builder()
-                .region(Region.of(region))
-                .credentialsProvider(DefaultCredentialsProvider.create())
-                .build();
-        this.presigner = S3Presigner.builder()
-                .region(Region.of(region))
-                .credentialsProvider(DefaultCredentialsProvider.create())
-                .build();
+        this.client = s3Client;
+        this.presigner = s3Presigner;
     }
 
     @Override
