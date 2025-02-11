@@ -19,6 +19,7 @@ COPY . .
 # build app native static binary
 RUN ./gradlew build --no-daemon \
     -Dquarkus.native.enabled=true \
+    -Dquarkus.package.type=native \
     -Dquarkus.native.additional-build-args="-H:+DumpTargetInfo,-H:+TraceNativeToolUsage,-H:+SpawnIsolates,-H:+JNI,--native-image-info,--verbose,-H:+StaticExecutableWithDynamicLibC,-H:DeadlockWatchdogInterval=10,-H:+DeadlockWatchdogExitOnTimeout"
 
 

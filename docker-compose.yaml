@@ -14,8 +14,9 @@ services:
       - "5432:5432"
     restart: on-failure
 
-  api:
-    build: .
+  api-native:
+    build:
+      dockerfile: Dockerfile
     env_file:
       - .env
     ports:
@@ -23,3 +24,21 @@ services:
     restart: on-failure
     depends_on:
       - postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '500M'
+
+  api-jvm:
+    build:
+      dockerfile: Dockerfile.jvm
+    env_file:
+      - .env
+    ports:
+      - "8081:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '500M'

@@ -1,0 +1,25 @@
+FROM openjdk:21 AS build
+
+WORKDIR /workspace
+
+ENV GRADLE_USER_HOME=/workspace/.gradle
+
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradle.properties .
+
+RUN ./gradlew dependencies --no-daemon
+
+COPY . .
+
+RUN ./gradlew build --no-daemon -Dquarkus.package.jar.type=fast-jar
+
+FROM azul/zulu-openjdk:21-jre AS runtime
+
+WORKDIR /work/
+
+COPY --from=build /workspace/build/quarkus-app/ /work/
+
+ENTRYPOINT ["java", "-jar", "/work/quarkus-run.jar"]
