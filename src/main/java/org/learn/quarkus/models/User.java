@@ -2,7 +2,6 @@ package org.learn.quarkus.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter
 @RegisterForReflection
-public class User extends PanacheEntityBase {
+public class User {
     @Id
     @GeneratedValue
     public UUID id;

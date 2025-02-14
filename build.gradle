@@ -23,14 +23,14 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-rest'
     implementation 'io.quarkus:quarkus-elytron-security-jdbc'
+    implementation 'io.quarkus:quarkus-spring-data-jpa'
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
     implementation("io.quarkus:quarkus-smallrye-openapi")
 
     // Hibernate ORM
-    implementation("io.quarkus:quarkus-hibernate-orm-panache")
     implementation("io.quarkus:quarkus-jdbc-postgresql")
-
+    implementation("io.quarkus:quarkus-hibernate-orm")
     // validator
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
     implementation("io.quarkus:quarkus-hibernate-validator")
