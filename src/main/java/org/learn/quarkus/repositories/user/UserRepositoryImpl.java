@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.transaction.Transactional;
+import org.learn.quarkus.configs.Configs;
 import org.learn.quarkus.models.primary.User;
 
 import java.util.List;
@@ -14,20 +15,18 @@ import java.util.UUID;
 public class UserRepositoryImpl implements UserRepository {
 
     @Inject
-    @PersistenceUnit(name = "primary", unitName = "primary")
+    @PersistenceUnit(name = Configs.PRIMARY_DB, unitName = Configs.PRIMARY_DB)
     EntityManager em;
 
     @Override
     public List<User> all(String q) {
-        StringBuilder queryStr = new StringBuilder("SELECT u FROM User u");
         if (q != null && !q.isEmpty()) {
-            queryStr.append(" WHERE u.name LIKE :q OR u.email LIKE :q");
+            var query = "SELECT u FROM User u WHERE u.name LIKE :q OR u.email LIKE :q";
+            return em.createQuery(query, User.class)
+                    .setParameter("q", "%" + q + "%")
+                    .getResultList();
         }
-        var query = em.createQuery(queryStr.toString(), User.class);
-        if (q != null && !q.isEmpty()) {
-            query.setParameter("q", "%" + q + "%");
-        }
-        return query.getResultList();
+        return em.createQuery("SELECT p FROM User p", User.class).getResultList();
     }
 
     @Override

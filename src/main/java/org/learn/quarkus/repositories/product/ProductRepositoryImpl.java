@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.transaction.Transactional;
+import org.learn.quarkus.configs.Configs;
 import org.learn.quarkus.models.secondary.Product;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepository {
 
     @Inject
-    @PersistenceUnit(name = "secondary", unitName = "secondary")
+    @PersistenceUnit(name = Configs.SECONDARY_DB, unitName = Configs.SECONDARY_DB)
     EntityManager em;
 
     @Override
