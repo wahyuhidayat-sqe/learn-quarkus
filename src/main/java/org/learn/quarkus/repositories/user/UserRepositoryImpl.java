@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class IUserRepository implements UserRepository {
+public class UserRepositoryImpl implements UserRepository {
 
     @Inject
     @PersistenceUnit(name = "primary", unitName = "primary")

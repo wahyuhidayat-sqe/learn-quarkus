@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Slf4j
 @Singleton
-public class IS3StorageRepository implements StorageRepository {
+public class S3StorageRepositoryImpl implements StorageRepository {
 
     private static final String UPLOAD_PATH_PREFIX = "uploads/";
 
@@ -26,7 +26,7 @@ public class IS3StorageRepository implements StorageRepository {
     private final S3Presigner presigner;
 
     @Inject
-    public IS3StorageRepository(
+    public S3StorageRepositoryImpl(
             @ConfigProperty(name = "app.storage.bucket-name") String bucketName,
             S3Client s3Client,
             S3Presigner s3Presigner
