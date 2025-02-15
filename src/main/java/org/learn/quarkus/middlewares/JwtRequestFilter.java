@@ -9,7 +9,7 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 import lombok.extern.slf4j.Slf4j;
-import org.learn.quarkus.models.User;
+import org.learn.quarkus.models.primary.User;
 import org.learn.quarkus.schema.ErrorResponse;
 import org.learn.quarkus.services.AuthService;
 

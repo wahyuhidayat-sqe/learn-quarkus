@@ -12,7 +12,7 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement
 import org.learn.quarkus.configs.Configs;
 import org.learn.quarkus.exception.DuplicateValueException;
 import org.learn.quarkus.middlewares.JwtRequestFilter;
-import org.learn.quarkus.models.User;
+import org.learn.quarkus.models.primary.User;
 import org.learn.quarkus.rest.user.schema.CreateUserRequest;
 import org.learn.quarkus.schema.ApiResponse;
 import org.learn.quarkus.services.UserService;

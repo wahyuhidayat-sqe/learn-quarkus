@@ -1,6 +1,6 @@
-package org.learn.quarkus.repositories;
+package org.learn.quarkus.repositories.user;
 
-import org.learn.quarkus.models.User;
+import org.learn.quarkus.models.primary.User;
 
 import java.util.List;
 import java.util.UUID;

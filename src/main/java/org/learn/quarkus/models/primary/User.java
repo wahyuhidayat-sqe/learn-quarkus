@@ -1,4 +1,4 @@
-package org.learn.quarkus.models;
+package org.learn.quarkus.models.primary;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

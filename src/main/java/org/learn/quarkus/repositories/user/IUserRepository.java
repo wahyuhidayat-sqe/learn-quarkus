@@ -1,9 +1,11 @@
-package org.learn.quarkus.repositories;
+package org.learn.quarkus.repositories.user;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceUnit;
 import jakarta.transaction.Transactional;
-import org.learn.quarkus.models.User;
+import org.learn.quarkus.models.primary.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,11 +13,9 @@ import java.util.UUID;
 @ApplicationScoped
 public class IUserRepository implements UserRepository {
 
+    @Inject
+    @PersistenceUnit(name = "primary", unitName = "primary")
     EntityManager em;
-
-    public IUserRepository(EntityManager em) {
-        this.em = em;
-    }
 
     @Override
     public List<User> all(String q) {

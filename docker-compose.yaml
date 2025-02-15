@@ -14,6 +14,18 @@ services:
       - "5432:5432"
     restart: on-failure
 
+  postgres-secondary:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_PORT: "5432"
+    volumes:
+      - ./volumes/postgres-secondary:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
   api-native:
     build:
       dockerfile: Dockerfile

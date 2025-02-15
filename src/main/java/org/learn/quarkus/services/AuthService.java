@@ -7,8 +7,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.security.auth.message.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.learn.quarkus.models.User;
-import org.learn.quarkus.repositories.UserRepository;
+import org.learn.quarkus.models.primary.User;
+import org.learn.quarkus.repositories.user.UserRepository;
 import org.learn.quarkus.repositories.storage.StorageRepository;
 import org.learn.quarkus.rest.auth.schema.LoginData;
 

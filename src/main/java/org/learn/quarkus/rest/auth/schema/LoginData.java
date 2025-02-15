@@ -2,7 +2,7 @@ package org.learn.quarkus.rest.auth.schema;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Builder;
-import org.learn.quarkus.models.User;
+import org.learn.quarkus.models.primary.User;
 
 @Builder
 @RegisterForReflection
